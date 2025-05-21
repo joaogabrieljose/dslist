@@ -1,30 +1,33 @@
-package com.javaspring.dslist.services;
+package com.javaspring.dslist.services.games;
+
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.javaspring.dslist.dto.GameDTO;
+import com.javaspring.dslist.dto.GameMinDTO;
 import com.javaspring.dslist.entity.Game;
 import com.javaspring.dslist.exception.GameFandByIdNotFoundException;
+import com.javaspring.dslist.projections.GameMinProjection;
 import com.javaspring.dslist.repository.GameRepository;
 
 @Service
-public class GameUseCaseGetId {
+public class GameSearchByListUseCase {
 
-    @Autowired
+    @Autowired 
     private GameRepository gameRepository;
 
-    @Transactional(readOnly = true)
-    public GameDTO findByIdGame(Long id){
 
-        Game result = this.gameRepository.findById(id).get();
-        if (result == null) {
+    @Transactional(readOnly = true)
+    public List<GameMinDTO> findByList(Long listId){
+
+        List<GameMinProjection> searchByList = this.gameRepository.searchByList(listId);
+
+        if (searchByList == null) {
             throw new GameFandByIdNotFoundException();
         }
-
-        GameDTO dto = new GameDTO(result);
-        return dto;
+        return searchByList.stream().map(x -> new GameMinDTO(x)).toList();
     }
     
 }

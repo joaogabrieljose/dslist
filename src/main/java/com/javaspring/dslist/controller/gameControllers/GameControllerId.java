@@ -1,30 +1,32 @@
-package com.javaspring.dslist.controller;
+package com.javaspring.dslist.controller.gameControllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.javaspring.dslist.services.GameUseCase;
+import com.javaspring.dslist.services.games.GameUseCaseGetId;
+
 
 @RestController
 @RequestMapping("/games")
-public class GameController {
+public class GameControllerId {
 
     @Autowired
-    private GameUseCase gameUseCase;
+    private GameUseCaseGetId gameUseCaseGetId;
 
-    @GetMapping
-    public ResponseEntity<?> findAllGame(){
+    @GetMapping("/{id}")
+    public ResponseEntity<?> gameFindId(@PathVariable Long id){
 
         try {
-            var recursoResult = this.gameUseCase.getGame();
-            return ResponseEntity.ok().body(recursoResult);
+            var resultGetId = this.gameUseCaseGetId.findByIdGame(id);
+            return ResponseEntity.ok().body(resultGetId);
             
         } catch (Exception e) {
            return ResponseEntity.badRequest().body(e.getMessage());
         }
-        
     }
+    
 }

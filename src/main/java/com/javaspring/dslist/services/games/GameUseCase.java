@@ -1,4 +1,4 @@
-package com.javaspring.dslist.services;
+package com.javaspring.dslist.services.games;
 
 import java.util.List;
 
