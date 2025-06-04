@@ -27,7 +27,6 @@ public class GameMinDTO {
         this.shortDescription = projection.getShortDescription();
     }
 
-
     public Long getId() {
         return id;
     }
